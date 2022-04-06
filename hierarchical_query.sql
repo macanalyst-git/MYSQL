@@ -1,7 +1,7 @@
 # 프로그래머스 코딩테스트 연습 SQL 문제
 # cte 활용
 
-# 제귀식을 활용하여 0 ~ 23 TABLE 생성
+# 재귀식을 활용하여 0 ~ 23 TABLE 생성
 WITH RECURSIVE CTE AS (
     SELECT 0 AS N 
     UNION ALL 
