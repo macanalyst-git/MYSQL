@@ -54,3 +54,17 @@ SELECT UPPER(CONCAT('my favorite author is ', author_fname, ' ', author_lname, '
 FROM books
 ORDER BY author_lname ;
 
+################################################################################################################################################## aggregeate function
+-- exam3. 가장 긴 책을 쓴 작가 출력
+SELECT CONCAT(author_fname, ' ', author_lname) AS 'author name',
+	   pages
+FROM books 
+ORDER BY pages DESC LIMIT 1;
+
+-- exam4. 연도별 출판된 책의 개수와 책들의 평균 페이지를 구하라
+SELECT released_year as year,
+       count(*) as '# books',
+	   avg(pages) as 'avg pages'
+FROM books
+GROUP BY released_year
+ORDER BY released_year;
