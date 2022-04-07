@@ -1,3 +1,4 @@
+# exam data
 
 CREATE DATABASE book_shop;
 USE book_shop;
@@ -33,8 +34,12 @@ VALUES
 ('Consider the Lobster', 'David', 'Foster Wallace', 2005, 92, 343);
 
 
+
+
+# multi string function 
+
 SELECT CONCAT(SUBSTR(title, 1, 10), '...') as 'short title',
-	   CONCAT(author_lname, ',', author_fname) as 'author',
+       CONCAT(author_lname, ',', author_fname) as 'author',
        CONCAT(stock_quantity, ' in stock') as 'quantity'
 FROM books
 WHERE SUBSTR(title, 1,1) = 'A'
