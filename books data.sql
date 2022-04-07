@@ -1,4 +1,4 @@
-# exam data
+############################################################################################################################################################ book data
 
 CREATE DATABASE book_shop;
 USE book_shop;
@@ -33,10 +33,13 @@ VALUES
 ('Oblivion: Stories', 'David', 'Foster Wallace', 2004, 172, 329),
 ('Consider the Lobster', 'David', 'Foster Wallace', 2005, 92, 343);
 
-
-
-
-# multi string function 
+INSERT INTO books(title, author_fname, author_lname, released_year, stock_quantity, pages)
+VALUES ('10% Happier', 'Dan', 'Harris', 2014, 29, 256),
+       ('fake_book', 'Freida', 'Harris', 2001, 287, 428),
+       ('Lincoln In The Bardo', 'George', 'Saunders', 2017, 1000, 367);
+       
+########################################################################################################################################### multi string function exam 
+-- exam 1. title 맨 앞 글자가 'A'이면서 stock_quantity가 150 미만인 데이터 조회
 
 SELECT CONCAT(SUBSTR(title, 1, 10), '...') as 'short title',
        CONCAT(author_lname, ',', author_fname) as 'author',
@@ -44,3 +47,10 @@ SELECT CONCAT(SUBSTR(title, 1, 10), '...') as 'short title',
 FROM books
 WHERE SUBSTR(title, 1,1) = 'A'
 AND stock_quantity < 150;
+
+############################################################################################################################################## refining selection exam
+-- exam 2. 'MY FAVORITE AUTHOR IS #author_fname #author_lname !' 출력
+SELECT UPPER(CONCAT('my favorite author is ', author_fname, ' ', author_lname, '!')) as yell 
+FROM books
+ORDER BY author_lname ;
+
