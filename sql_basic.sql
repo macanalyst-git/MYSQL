@@ -68,3 +68,15 @@ SELECT released_year as year,
 FROM books
 GROUP BY released_year
 ORDER BY released_year;
+
+-- exam5. 타이틀이 가장 긴 책은 무엇인지 구하라
+select title, char_length(title) from books
+order by char_length(title) desc limit 1;
+
+-- exam6. 작가별 첫 작품을 출판 후 지난 년 수를 구하라.
+select author_fname, author_lname, 
+	   released_year, year(now()) - min(released_year) as 'ago_year' from books
+group by author_fname, author_lname;
+
+
+
