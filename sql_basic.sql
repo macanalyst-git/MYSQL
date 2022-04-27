@@ -70,13 +70,49 @@ GROUP BY released_year
 ORDER BY released_year;
 
 -- exam5. 타이틀이 가장 긴 책은 무엇인지 구하라
-select title, char_length(title) from books
-order by char_length(title) desc limit 1;
+SELECT title, char_length(title) FROM books
+ORDER BY char_length(title) DESC LIMIT 1;
 
 -- exam6. 작가별 첫 작품을 출판 후 지난 년 수를 구하라.
-select author_fname, author_lname, 
-	   released_year, year(now()) - min(released_year) as 'ago_year' from books
-group by author_fname, author_lname;
+SELECT author_fname, author_lname, 
+	   released_year, year(now()) - min(released_year) as 'ago_year' FROM books
+GROUP BY author_fname, author_lname;
+
+##################################################################################################################################################### Logical operators
+
+-- exam7. 홀수년도에 출판된 책만 출력하라.
+SELECT * FROM books
+WHERE released_year >= 2000 AND released_year % 2 != 0 ;  
+
+-- exam8. 작가 성이 C or S 로 시작하는 책만 출력하라.
+SELECT * FROM books
+WHERE author_lname REGEXP ('^C|^S');
+
+####################################################################################################################################################### CASE STATEMENTS
+
+-- exam9. GENRE - 출판년도가 2000 이상은 Modern Lit 미만은 20th Century Lit
+--        STOCK - 재고량이 50 이하는 * 100이하는 ** 100 초과는 *** 인 컬럼을 생성해서 출력하라. 
+
+select title, released_year, stock_quantity, 
+	case 
+		when released_year >= 2000 then 'Modern Lit' 
+        	else '20th Century Lit' 
+	end as 'GENRE' ,
+    	case 
+		when stock_quantity <= 50 then '*'
+        	when stock_quantity <= 100 then '**'
+        	else '***'
+        end as 'STOCK'
+from books ; 
 
 
+-- exam10. title 에 'stories' 가 있으면 'Short Stories', 'Kids' or 'A Heartbreaking Work' 가 있으면 'Memoir' 나머지는 'Novel'
+
+ELECT title, author_lname,
+	CASE 
+		WHEN title regexp('stories+') THEN 'Short Stories'
+        WHEN title regexp('Kids+|A Heartbreaking Work+') THEN 'Memoir'
+        ELSE 'Novel'
+	END as 'TYPE'
+FROM books ;
 
