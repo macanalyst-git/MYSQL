@@ -108,7 +108,7 @@ from books ;
 
 -- exam10. title 에 'stories' 가 있으면 'Short Stories', 'Kids' or 'A Heartbreaking Work' 가 있으면 'Memoir' 나머지는 'Novel'
 
-ELECT title, author_lname,
+SELECT title, author_lname,
 	CASE 
 		WHEN title regexp('stories+') THEN 'Short Stories'
         WHEN title regexp('Kids+|A Heartbreaking Work+') THEN 'Memoir'
