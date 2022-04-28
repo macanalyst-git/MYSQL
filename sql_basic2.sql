@@ -1,4 +1,4 @@
-######################################################################################################################################################################################### EXAM DATA2
+############################################################################################################################################################ EXAM DATA2
 
 CREATE TABLE customers(
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -15,7 +15,7 @@ CREATE TABLE orders(
 );
 
 
-####################################################################################################################################################################################### TABLE MODIFY
+#####################################################################################################################################$#################### TABLE MODIFY
 # 열 정보 수정 // 외래키 설정 추가 // 테이블 정보 열람
 
 ALTER TABLE orders MODIFY id INT AUTO_INCREMENT;
@@ -27,7 +27,7 @@ ALTER TABLE orders DROP CONSTRAINT customer_id ;  # <- 제약식 'customer_id' �
 
 ALTER TABLE orders ADD CONSTRAINT customer_id 
 FOREIGN KEY (customer_id) REFERENCES customers (id) ON DELETE CASCADE; # <- 제약식 'customer_id' cascade 까지 추가하여 다시 생성.
-																	   # <- cascade : 부모 table에 삭제, 수정이 될 때 자식 까지 동시에 바뀜
+						                       # <- cascade : 부모 table에 삭제, 수정이 될 때 자식 까지 동시에 바뀜
 
 desc orders;
 
@@ -47,12 +47,13 @@ VALUES ('2016/02/01', 99.99, 1),
        ('1999/04/11', 450.25, 5);
 
 INSERT INTO orders (order_date, amount, customer_id)
-VALUES ('2016/06/06', 33.67, 98); # a foreign key constraint fails (`book_shop`.`orders`, CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`))
+VALUES ('2016/06/06', 33.67, 98); # a foreign key constraint fails (`book_shop`.`orders`, CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) 
+				  #				    REFERENCES `customers` (`id`))
 
 INSERT INTO orders (order_date, amount, customer_id)
 VALUES ('2016/06/06', 33.67, 98);
 
-############################################################################################################################################################################################### JOIN
+################################################################################################################################################################## JOIN
 
 # cross join
 
@@ -92,7 +93,7 @@ select * from customers; # id 1 이 삭제됨을 확인
 select * from orders; # customer의 id 1 이 삭제 됨에 따라 자동으로 orders 의 customer_id 가 1인 데이터도 삭제
 
 
-# Q1 students 가 부모 테이블 // papers가 자식 테이블이 되게 작성. 
+# exam 1. students 가 부모 테이블 // papers가 자식 테이블이 되게 작성. 
 
 CREATE TABLE students (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -124,19 +125,8 @@ VALUES (1, 'My First Book Report', 60),
        (2, 'De Montaigne and The Art of The Essay', 98),
        (4, 'Borges and Magical Realism', 89);
 
-select * from papers;
 
-select first_name, title, grade 
-from students, papers
-where students.id = papers.student_id 
-order by first_name desc, grade desc;
-
-select first_name, 
-	   ifnull(title, 'MISSING') AS title, 
-       IFNULL(grade, 0) as grade
-from students
-left join papers 
-	on students.id = papers.student_id ;
+# exam 2. 모든 학생들의 시험통과 여부(passing_status)를 출력하라. (80점 이상 통과)
 
 select first_name,
 	   ifnull(avg(grade), 0) as average,
