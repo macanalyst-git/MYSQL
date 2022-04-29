@@ -124,7 +124,7 @@ from
 	 and colleges.college_id = challenges.college_id) as A 
 left join (select challenge_id,
 	          sum(total_submissions) as a,                 # <- 해결책은 submission, view table에서 계산하고 A table과 1:1 관계 or 1:0 관계를 만들어야 했다.
-	          sum(total_accepted_submissions) as b         #    N:N 관계에서 Join을 하는 것은 안되는 것을 다시 한 번 느낀 문제엿다.
+	          sum(total_accepted_submissions) as b         #    N:N 관계에서 Join을 하는 것은 주의해야하는 것을 다시 한 번 느낀 문제엿다.
            from submission_stats
 	   group by challenge_id) as submission
 	       on A.challenge_id = submission.challenge_id
