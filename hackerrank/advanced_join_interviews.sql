@@ -135,7 +135,8 @@ left join (select challenge_id,
 	   group by challenge_id) as view
 	   on A.challenge_id = view.challenge_id
 group by A.contest_id
-having a + b + c + d != 0;
+having a + b + c + d != 0
+order by A.contest_id;
   
 
 
