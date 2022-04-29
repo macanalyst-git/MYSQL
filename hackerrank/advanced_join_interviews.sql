@@ -63,7 +63,7 @@ insert into submission_stats values
 
 
 select contests.*,
-	     ifnull(sum(total_submissions),0) a,                         # <- left join을 하다보면 NUll 값이 나온다. 
+       ifnull(sum(total_submissions),0) a,                         # <- left join을 하다보면 NUll 값이 나온다. 
        ifnull(sum(total_accepted_submissions),0) b,                #    null을 그냥 sum하면 null이 나오기 때문에 0으로 바꿔준다.
        ifnull(sum(total_views),0) c,
        ifnull(sum(total_unique_views),0) d
@@ -82,8 +82,8 @@ order by contest_id;
 
 # output 
 # 66406	17973	Rose	222	78	238	122 # <- 오답
-# 66556	79153	Angela	0	0	11	10    # <- 정답
-# 94828	80275	Frank	150	38	82	30  # <- 오답                      # (contests, colleges, challenges) table 과 views, submissions table이 N:N 관계이다 보니 문제가 생기는
+# 66556	79153	Angela	0	0	11	10  # <- 정답
+# 94828	80275	Frank	150	38	82	30  # <- 오답      # (contests, colleges, challenges) table 과 views, submissions table이 N:N 관계이다 보니 문제가 생기는
                                                                    # 것으로 보인다.
                                                                    
                                                                    
@@ -104,14 +104,14 @@ left join view_stats as view
 # 66406	17973	Rose	  11219	18765	18765	43	10 #                        여기서 submission을 추가하면 x 2 가 되어 1차 풀이 결과가 나오는 것을 확인. 
 # 66406	17973	Rose	  11219	47127	47127	15	14 #
 # 66406	17973	Rose	  11219	47127	47127	26	19 #
-# 65556	79153	Angela	32473	60292	60292	11	10 #
+# 65556	79153	Angela	  32473	60292	60292	11	10 #
 # 94828	80275	Frank	  56685	72974	72974	41	15 # 
 ################################################  
   
 ########################################################################################################################################################### 최종 답안
 
 select A.contest_id,
-	     A.hacker_id,
+       A.hacker_id,
        A.name,
        ifnull(sum(a),0) as a,
        ifnull(sum(b),0) as b,
@@ -123,17 +123,17 @@ from
 	 where contests.contest_id = colleges.contest_id
 	 and colleges.college_id = challenges.college_id) as A 
 left join (select challenge_id,
-				          sum(total_submissions) as a,                 # <- 해결책은 submission, view table에서 계산하고 A table과 1:1 관계 or 1:0 관계를 만들어야 했다.
-			            sum(total_accepted_submissions) as b         #    N:N 관계에서 Join을 하는 것은 안되는 것을 다시 한 번 느낀 문제엿다.
-		       from submission_stats
-		       group by challenge_id) as submission
-	on A.challenge_id = submission.challenge_id
+	          sum(total_submissions) as a,                 # <- 해결책은 submission, view table에서 계산하고 A table과 1:1 관계 or 1:0 관계를 만들어야 했다.
+	          sum(total_accepted_submissions) as b         #    N:N 관계에서 Join을 하는 것은 안되는 것을 다시 한 번 느낀 문제엿다.
+           from submission_stats
+	   group by challenge_id) as submission
+	       on A.challenge_id = submission.challenge_id
 left join (select challenge_id,
-				          sum(total_views) as c,
-			            sum(total_unique_views) as d
-		       from view_stats
-		       group by challenge_id) as view
-	on A.challenge_id = view.challenge_id
+		  sum(total_views) as c,
+		  sum(total_unique_views) as d
+	   from view_stats
+	   group by challenge_id) as view
+	   on A.challenge_id = view.challenge_id
 group by A.contest_id
 having a + b + c + d != 0;
   
